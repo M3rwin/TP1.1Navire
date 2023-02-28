@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using TP1._1Navire.Exceptions;
 
 namespace TP1._1Navire
 {
@@ -12,6 +13,7 @@ namespace TP1._1Navire
         private string nom;
         private string libelleFret;
         private int qteFretMaxi;
+        private int qteFret;
 
 
         // CONSTRUCTOR
@@ -23,12 +25,13 @@ namespace TP1._1Navire
             this.QteFretMaxi = 0;
         }
 
-        public Navire(string imo, string nom, string libelleFret, int qteFretMaxi)
+        public Navire(string imo, string nom, string libelleFret, int qteFretMaxi, int qteFret)
         {
             this.Imo = imo;
             this.nom = nom;
             this.libelleFret = libelleFret;
             this.QteFretMaxi = qteFretMaxi;
+            this.QteFret= qteFret;
         }
         // SETTERS GETTERS
         public string Imo
@@ -43,7 +46,7 @@ namespace TP1._1Navire
                 }
                 else
                 {
-                    throw new Exception("Erreur : IMO invalide");
+                    throw new GestionPortException("Erreur : IMO invalide");
                 }
             }
         }
@@ -60,12 +63,44 @@ namespace TP1._1Navire
                 }
                 else
                 {
-                    throw new Exception("Erreur, quantité de fret non valide");
+                    throw new GestionPortException("Erreur, quantité de fret non valide");
                 }
             }
         }
 
+        public int QteFret 
+        { 
+            get => qteFret;
+            private set
+            {
+                if (value < 0 || value > this.qteFretMaxi)
+                {
+                    throw new GestionPortException("Valeur incohérente pour la quantité de fret stockée dans le navire");
+                }
+                else { this.qteFret = value; }
+            }
+        }
+
+
 
         //METHODES
+
+        public int Decharger(int quantite)
+        {
+            if(quantite<0) { throw new GestionPortException("la quantité à décharger ne peut être négative ou nulle"); }
+            else if (quantite>this.qteFret) { throw new GestionPortException("Impossible, fret insuffisant"); }
+            else 
+            {
+                this.QteFret -= quantite;
+                return quantite;
+            }
+        }
+
+        
+        public bool EstDecharge()
+        {
+            return this.qteFret == 0;
+        }
+
     }
 }
