@@ -95,12 +95,12 @@ namespace TP1._1Navire
             Navire navire = null;
             try
             {
-                port.EnregistrerArrivee(new Navire("IMO0000001", "Navire1"));
-                port.EnregistrerArrivee(new Navire("IMO0000002", "Navire2"));
                 port.EnregistrerArrivee(new Navire("IMO0000003", "Navire3"));
                 port.EnregistrerArrivee(new Navire("IMO0000004", "Navire4"));
                 port.EnregistrerArrivee(new Navire("IMO0000005", "Navire5"));
                 port.EnregistrerArrivee(new Navire("IMO0000006", "Navire6"));
+                port.EnregistrerArrivee(new Navire("IMO0000007", "Navire7"));
+                port.EnregistrerArrivee(new Navire("IMO0000008", "Navire8"));
             }
             catch (GestionPortException ex) { Console.WriteLine(ex.Message); }
             catch (ArgumentException) { throw new GestionPortException("Le navire " + navire.Imo + " est déjà enregistré."); }
@@ -112,10 +112,7 @@ namespace TP1._1Navire
             Navire navire = null;
             try
             {
-                navire = new Navire("IMO0000003", "Navire3");
-                port.EnregistrerArrivee(navire);
-                navire = new Navire("IMO0000002", "Navire2");
-                port.EnregistrerArrivee(navire);
+                
                 port.EnregistrerDepart("IMO0000002");
                 Console.WriteLine($"{navire.Imo} est bien partit.");
 
@@ -175,7 +172,7 @@ namespace TP1._1Navire
                 port.EnregistrerArrivee(new Navire("IMO9786841", "EVER GLOBE", "Porte-conteneurs", 198937, 190000));
                 string imo = "IMO9786841";
                 port.Dechargement(imo);
-                Console.WriteLine("Navire “ + imo + “ déchargé");
+                Console.WriteLine("Navire " + imo + " déchargé");
                 port.EnregistrerDepart(imo);
             }
             catch (GestionPortException ex) { Console.WriteLine(ex.Message); }
