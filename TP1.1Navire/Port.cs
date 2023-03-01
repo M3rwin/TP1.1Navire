@@ -67,22 +67,23 @@ namespace TP1._1Navire
                 Navire navire = this.navires[imo];
                 if (navire.LibelleFret == "Porte-conteneurs")
                 {
-                    for(int i=0; i<this.stockages.Count; i++)
+                    int i = 0;
+                    while(!navire.EstDecharge() && i < this.stockages.Count)
                     {
                         if (navire.QteFret >= this.stockages[i].CapaciteDispo)
                         {
                             navire.Decharger(this.stockages[i].CapaciteDispo);
                         }
                         else { navire.Decharger(navire.QteFret); }
-                        
+                        i += 1;
                     }
-                    if (navire.QteFret > 0)
+                    if (!navire.EstDecharge())
                     {
                         throw new GestionPortException($"Le navire {imo} n'a pas pu être entièrement déchargé, il reste {navire.QteFret} tonnes.");
 
                     }
                 }
-                else { throw new GestionPortException("Le navire ne peut pas être dééchargé ici"); }
+                else { throw new GestionPortException("Le navire ne peut pas être déchargé ici"); }
             }
             else { throw new GestionPortException("Le navire n'est pas dans le port"); }
         }
